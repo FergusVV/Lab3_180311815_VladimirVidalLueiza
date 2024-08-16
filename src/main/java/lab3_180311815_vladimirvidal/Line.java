@@ -246,12 +246,68 @@ public class Line {
     }
 
     // Constructor privado para crear una nueva línea con secciones específicas
-    private Line(int id, String name, String railType, List<Section> sections) {
+    public Line(int id, String name, String railType, List<Section> sections) {
         this.id = id;
         this.name = name;
         this.railType = railType;
-        this.sections = sections;
+        this.sections = new ArrayList<>(sections);
     }
+
+    public static boolean isLine(Line line) {
+        if (line == null || line.sections == null || line.sections.isEmpty()) {
+            System.out.println("La línea es nula o no tiene secciones.");
+            return false;
+        }
+
+        // Variables para rastrear el ID de las estaciones
+        Integer previousStationId = null;
+        boolean isCircular = line.isCircular();
+
+        // Lista para verificar si hay IDs de estaciones repetidos
+        List<Integer> stationIds = new ArrayList<>();
+
+        for (int i = 0; i < line.sections.size(); i++) {
+            Section currentSection = line.sections.get(i);
+            int startId = currentSection.getPoint1().getId();
+            int endId = currentSection.getPoint2().getId();
+
+            // Verificar si las estaciones están conectadas correctamente
+            if (previousStationId != null && !previousStationId.equals(startId)) {
+                System.out.println("Error de conexión entre secciones " + (i - 1) + " y " + i);
+                return false;
+            }
+
+            // Manejo especial para líneas circulares en la última sección
+            if (isCircular && i == line.sections.size() - 1) {
+                if (endId != stationIds.get(0)) {
+                    System.out.println("Error: La línea circular no cierra correctamente.");
+                    return false;
+                }
+            } else {
+                // Verificar IDs repetidos en estaciones para líneas no circulares
+                if (stationIds.contains(startId)) {
+                    System.out.println("ID repetido detectado: " + startId);
+                    return false;
+                }
+                stationIds.add(startId);
+            }
+
+            previousStationId = endId;
+        }
+
+        // Añadir la última estación para líneas no circulares y verificar repetición
+        if (!isCircular && stationIds.contains(previousStationId)) {
+            System.out.println("ID repetido detectado en la última estación: " + previousStationId);
+            return false;
+        }
+
+        System.out.println("La línea es válida.");
+        return true;
+    }
+
+
+
+
 
     // Getters
     public int getId() {

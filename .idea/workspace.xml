@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ea3e3377-43f2-4d92-a2ba-4a61a80ca511" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/lab3_180311815_vladimirvidal/Line.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lab3_180311815_vladimirvidal/Section.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lab3_180311815_vladimirvidal/Station.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lab3_180311815_vladimirvidal/PassengerCar.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lab3_180311815_vladimirvidal/Train.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lab3_180311815_vladimirvidal/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lab3_180311815_vladimirvidal/Line.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lab3_180311815_vladimirvidal/Line.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lab3_180311815_vladimirvidal/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lab3_180311815_vladimirvidal/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +119,10 @@
       <workItem from="1718955891487" duration="4537000" />
       <workItem from="1721720658382" duration="7703000" />
       <workItem from="1721949280513" duration="10143000" />
-      <workItem from="1722926832408" duration="1597000" />
+      <workItem from="1722926832408" duration="7570000" />
+      <workItem from="1723514878779" duration="2812000" />
+      <workItem from="1723765666605" duration="9176000" />
+      <workItem from="1723795435742" duration="9829000" />
     </task>
     <servers />
   </component>
