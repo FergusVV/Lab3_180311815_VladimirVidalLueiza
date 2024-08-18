@@ -328,6 +328,126 @@ public class Main {
                 System.out.println("Error durante las pruebas de fetchCapacity: " + e.getMessage());
             }
 
+            //*******************************************************
+
+            System.out.println("\nPruebas de la clase Driver:");
+            try {
+                // Crear un conductor válido
+                Driver driver1 = new Driver(1, "Juan Pérez", "FabricanteX");
+                System.out.println("Conductor creado: " + driver1);
+
+                // Intentar crear un conductor con ID negativo
+                try {
+                    new Driver(-1, "Ana García", "FabricanteY");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error esperado al crear conductor con ID negativo: " + e.getMessage());
+                }
+
+                // Intentar crear un conductor con nombre vacío
+                try {
+                    new Driver(2, "", "FabricanteZ");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error esperado al crear conductor con nombre vacío: " + e.getMessage());
+                }
+
+                // Intentar crear un conductor con fabricante nulo
+                try {
+                    new Driver(3, "Carlos Rodríguez", null);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error esperado al crear conductor con fabricante nulo: " + e.getMessage());
+                }
+
+                // Crear dos conductores con el mismo nombre pero diferente ID
+                Driver driver2 = new Driver(2, "Juan Pérez", "FabricanteY");
+                System.out.println("Segundo conductor creado: " + driver2);
+                System.out.println("¿Son iguales los conductores? " + driver1.equals(driver2));
+
+            } catch (Exception e) {
+                System.out.println("Error inesperado durante las pruebas de Driver: " + e.getMessage());
+                e.printStackTrace();
+            }
+
+            //----------------------------------------
+
+
+            System.out.println("\nPruebas de la clase Subway:");
+            try {
+                // Crear una red de metro válida
+                Subway subway1 = new Subway(1, "Metro de Santiago");
+                System.out.println("Red de metro creada: " + subway1);
+
+                // Intentar crear una red de metro con ID negativo
+                try {
+                    new Subway(-1, "Metro Inválido");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error esperado al crear red de metro con ID negativo: " + e.getMessage());
+                }
+
+                // Intentar crear una red de metro con nombre vacío
+                try {
+                    new Subway(2, "");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error esperado al crear red de metro con nombre vacío: " + e.getMessage());
+                }
+
+                // Crear dos redes de metro con el mismo nombre pero diferente ID
+                Subway subway2 = new Subway(2, "Metro de Santiago");
+                System.out.println("Segunda red de metro creada: " + subway2);
+                System.out.println("¿Son iguales las redes de metro? " + subway1.equals(subway2));
+
+            } catch (Exception e) {
+                System.out.println("Error inesperado durante las pruebas de Subway: " + e.getMessage());
+                e.printStackTrace();
+            }
+
+            //------------------------------
+
+            System.out.println("\nPruebas de Subway - addTrain:");
+            try {
+                Subway subway = new Subway(1, "Metro de Prueba");
+
+                // Crear trenes válidos
+                PassengerCar terminalCar1 = new PassengerCar(1, 50, "ModeloA", "FabricanteX", "terminal");
+                PassengerCar centralCar1 = new PassengerCar(2, 60, "ModeloA", "FabricanteX", "central");
+                PassengerCar terminalCar2 = new PassengerCar(3, 50, "ModeloA", "FabricanteX", "terminal");
+                List<PassengerCar> carList1 = new ArrayList<>(Arrays.asList(terminalCar1, centralCar1, terminalCar2));
+                Train validTrain1 = new Train(1, "FabricanteX", 100, carList1);
+
+                PassengerCar terminalCar3 = new PassengerCar(4, 55, "ModeloB", "FabricanteY", "terminal");
+                PassengerCar centralCar2 = new PassengerCar(5, 65, "ModeloB", "FabricanteY", "central");
+                PassengerCar terminalCar4 = new PassengerCar(6, 55, "ModeloB", "FabricanteY", "terminal");
+                List<PassengerCar> carList2 = new ArrayList<>(Arrays.asList(terminalCar3, centralCar2, terminalCar4));
+                Train validTrain2 = new Train(2, "FabricanteY", 110, carList2);
+
+                // Añadir lista de trenes válidos
+                List<Train> validTrainList = new ArrayList<>(Arrays.asList(validTrain1, validTrain2));
+                subway.addTrain(validTrainList);
+                System.out.println("Trenes añadidos. Número de trenes en la red: " + subway.getTrains().size());
+
+                // Intentar añadir un tren con ID duplicado
+                Train duplicateIdTrain = new Train(1, "FabricanteZ", 120, carList1);
+                try {
+                    subway.addTrain(Arrays.asList(duplicateIdTrain));
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error esperado al añadir tren con ID duplicado: " + e.getMessage());
+                }
+
+                // Intentar añadir un tren inválido (sin carros terminales en los extremos)
+                List<PassengerCar> invalidCarList = new ArrayList<>(Arrays.asList(centralCar1, centralCar2, centralCar1));
+                Train invalidTrain = new Train(3, "FabricanteZ", 120, invalidCarList);
+                try {
+                    subway.addTrain(Arrays.asList(invalidTrain));
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error esperado al añadir tren inválido: " + e.getMessage());
+                }
+
+                System.out.println("Número final de trenes en la red: " + subway.getTrains().size());
+
+            } catch (Exception e) {
+                System.out.println("Error inesperado durante las pruebas de Subway - addTrain: " + e.getMessage());
+                e.printStackTrace();
+            }
+
         } catch (Exception e) {
             System.out.println("Error inesperado durante la prueba: " + e.getMessage());
             e.printStackTrace();
