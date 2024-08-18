@@ -201,138 +201,62 @@ public class Main {
                 System.out.println("Error esperado al crear carro con capacidad negativa: " + e.getMessage());
             }
 
-            // Añade esto al final del método main o en un nuevo método de prueba
+
 
             System.out.println("\nPruebas de la clase Train:");
 
             try {
-                // Crear carros de pasajeros para las pruebas
-                PassengerCar terminalCar1 = new PassengerCar(1, 50, "ModeloT1", "FabricanteX", "terminal");
-                PassengerCar centralCar1 = new PassengerCar(2, 60, "ModeloC1", "FabricanteX", "central");
-                PassengerCar centralCar2 = new PassengerCar(3, 60, "ModeloC2", "FabricanteX", "central");
-                PassengerCar terminalCar2 = new PassengerCar(4, 50, "ModeloT2", "FabricanteX", "terminal");
-
-                // Prueba 1: Crear un tren válido
-                List<PassengerCar> validCarList = new ArrayList<>(Arrays.asList(terminalCar1, centralCar1, centralCar2, terminalCar2));
-                Train validTrain = new Train(1, "FabricanteX", 100, validCarList);
-                System.out.println("Tren válido creado: " + validTrain);
-
-                // Prueba 2: Intentar crear un tren con ID negativo
-                try {
-                    Train invalidIdTrain = new Train(-1, "FabricanteY", 120, validCarList);
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Error esperado al crear tren con ID negativo: " + e.getMessage());
-                }
-
-                // Prueba 3: Intentar crear un tren con velocidad cero
-                try {
-                    Train zeroSpeedTrain = new Train(2, "FabricanteZ", 0, validCarList);
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Error esperado al crear tren con velocidad cero: " + e.getMessage());
-                }
-
-                // Prueba 4: Intentar crear un tren con configuración inválida de carros (sin terminales)
-                try {
-                    List<PassengerCar> invalidCarList = new ArrayList<>(Arrays.asList(centralCar1, centralCar2));
-                    Train invalidConfigTrain = new Train(3, "FabricanteW", 80, invalidCarList);
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Error esperado al crear tren con configuración inválida de carros: " + e.getMessage());
-                }
-
-                // Prueba 5: Crear un tren con el mínimo de carros (2 terminales)
-                List<PassengerCar> minCarList = new ArrayList<>(Arrays.asList(terminalCar1, terminalCar2));
-                Train minTrain = new Train(4, "FabricanteV", 90, minCarList);
-                System.out.println("Tren con mínimo de carros creado: " + minTrain);
-
-                // Prueba 6: Verificar que no se puede modificar la lista de carros desde fuera
-                List<PassengerCar> carList = validTrain.getCars();
-                carList.add(new PassengerCar(5, 70, "ModeloExtra", "FabricanteX", "central"));
-                System.out.println("Número de carros después de intentar modificar: " + validTrain.getCars().size());
-
-            } catch (Exception e) {
-                System.out.println("Error inesperado durante las pruebas de Train: " + e.getMessage());
-                e.printStackTrace();
-            }
-
-
-            System.out.println("\nPruebas de addCar:");
-
-            try {
-                // Crear un nuevo tren válido para las pruebas
-                PassengerCar terminalCar1 = new PassengerCar(1, 50, "ModeloT1", "FabricanteX", "terminal");
-                PassengerCar centralCar1 = new PassengerCar(2, 60, "ModeloC1", "FabricanteX", "central");
-                PassengerCar terminalCar2 = new PassengerCar(3, 50, "ModeloT2", "FabricanteX", "terminal");
+                // Crear carros para las pruebas
+                PassengerCar terminalCar1 = new PassengerCar(1, 50, "ModeloA", "FabricanteX", "terminal");
+                PassengerCar centralCar1 = new PassengerCar(2, 60, "ModeloA", "FabricanteX", "central");
+                PassengerCar terminalCar2 = new PassengerCar(3, 50, "ModeloA", "FabricanteX", "terminal");
                 List<PassengerCar> initialCarList = new ArrayList<>(Arrays.asList(terminalCar1, centralCar1, terminalCar2));
-                Train testTrain = new Train(1, "FabricanteX", 100, initialCarList);
 
+                Train testTrain = new Train(1, "FabricanteX", 100, initialCarList);
                 System.out.println("Tren inicial: " + testTrain);
 
-                // Crear un nuevo carro central
-                PassengerCar newCentralCar = new PassengerCar(4, 55, "ModeloC2", "FabricanteX", "central");
+                // Pruebas de addCar
+                System.out.println("\nPruebas de addCar:");
 
-                // Añadir el nuevo carro en una posición válida (entre los carros centrales)
+                PassengerCar newCentralCar = new PassengerCar(4, 55, "ModeloA", "FabricanteX", "central");
                 boolean addedSuccessfully = testTrain.addCar(newCentralCar, 1);
                 System.out.println("Carro añadido con éxito en posición 1: " + addedSuccessfully);
                 System.out.println("Tren después de añadir carro: " + testTrain);
 
-                // Intentar añadir un carro terminal en una posición no permitida
-                PassengerCar newTerminalCar = new PassengerCar(5, 45, "ModeloT3", "FabricanteX", "terminal");
-                try {
-                    testTrain.addCar(newTerminalCar, 2);
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Error esperado al añadir carro terminal en posición incorrecta: " + e.getMessage());
-                }
+                PassengerCar newTerminalCar = new PassengerCar(5, 45, "ModeloA", "FabricanteX", "terminal");
+                boolean addedTerminalSuccessfully = testTrain.addCar(newTerminalCar, 2);
+                System.out.println("Carro terminal añadido con éxito en posición 2: " + addedTerminalSuccessfully);
 
-                // Intentar añadir un carro de un fabricante diferente
-                PassengerCar wrongMakerCar = new PassengerCar(6, 50, "ModeloW", "FabricanteY", "central");
+                PassengerCar wrongMakerCar = new PassengerCar(6, 50, "ModeloA", "FabricanteY", "central");
                 try {
                     testTrain.addCar(wrongMakerCar, 2);
                 } catch (IllegalArgumentException e) {
                     System.out.println("Error esperado al añadir carro de fabricante diferente: " + e.getMessage());
                 }
 
-            } catch (Exception e) {
-                System.out.println("Error inesperado durante las pruebas de addCar: " + e.getMessage());
-                e.printStackTrace();
-            }
+                // Pruebas de removeCar
+                System.out.println("\nPruebas de removeCar:");
+                System.out.println("Tren antes de remover: " + testTrain);
 
-            System.out.println("\nPruebas de removeCar:");
-
-            try {
-                // Crear un nuevo tren válido para las pruebas
-                PassengerCar terminalCar1 = new PassengerCar(1, 50, "ModeloT1", "FabricanteX", "terminal");
-                PassengerCar centralCar1 = new PassengerCar(2, 60, "ModeloC1", "FabricanteX", "central");
-                PassengerCar centralCar2 = new PassengerCar(3, 60, "ModeloC2", "FabricanteX", "central");
-                PassengerCar terminalCar2 = new PassengerCar(4, 50, "ModeloT2", "FabricanteX", "terminal");
-                List<PassengerCar> initialCarList = new ArrayList<>(Arrays.asList(terminalCar1, centralCar1, centralCar2, terminalCar2));
-                Train testTrain = new Train(1, "FabricanteX", 100, initialCarList);
-
-                System.out.println("Tren inicial: " + testTrain);
-
-                // Remover un carro central
                 PassengerCar removedCar = testTrain.removeCar(1);
-                System.out.println("Carro removido: " + removedCar);
+                System.out.println("Carro removido: " + (removedCar != null ? removedCar : "No se pudo remover"));
                 System.out.println("Tren después de remover carro central: " + testTrain);
 
-                // Intentar remover un carro terminal
-                try {
-                    testTrain.removeCar(0);
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Error esperado al remover carro terminal: " + e.getMessage());
-                }
+                PassengerCar removedTerminal = testTrain.removeCar(0);
+                System.out.println("Carro terminal removido: " + (removedTerminal != null ? removedTerminal : "No se pudo remover"));
 
-                // Intentar remover con posición inválida
                 try {
                     testTrain.removeCar(5);
                 } catch (IllegalArgumentException e) {
                     System.out.println("Error esperado al remover con posición inválida: " + e.getMessage());
                 }
 
-                // Remover hasta quedar con el mínimo de carros
-                testTrain.removeCar(1);
+                while (testTrain.getCars().size() > 2) {
+                    PassengerCar removed = testTrain.removeCar(1);
+                    System.out.println("Carro removido: " + (removed != null ? removed : "No se pudo remover"));
+                }
                 System.out.println("Tren con mínimo de carros: " + testTrain);
 
-                // Intentar remover cuando solo quedan dos carros
                 try {
                     testTrain.removeCar(0);
                 } catch (IllegalArgumentException e) {
@@ -340,7 +264,7 @@ public class Main {
                 }
 
             } catch (Exception e) {
-                System.out.println("Error inesperado durante las pruebas de removeCar: " + e.getMessage());
+                System.out.println("Error inesperado durante las pruebas de Train: " + e.getMessage());
                 e.printStackTrace();
             }
 
@@ -374,6 +298,34 @@ public class Main {
             } catch (Exception e) {
                 System.out.println("Error inesperado durante las pruebas de Train: " + e.getMessage());
                 e.printStackTrace();
+            }
+            //´++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+            System.out.println("\nPruebas de fetchCapacity:");
+            try {
+                // Crear carros para las pruebas
+                PassengerCar terminalCar1 = new PassengerCar(1, 50, "ModeloA", "FabricanteX", "terminal");
+                PassengerCar centralCar = new PassengerCar(2, 60, "ModeloA", "FabricanteX", "central");
+                PassengerCar terminalCar2 = new PassengerCar(3, 55, "ModeloA", "FabricanteX", "terminal");
+
+                // Crear un tren con tres carros
+                List<PassengerCar> carList = new ArrayList<>(Arrays.asList(terminalCar1, centralCar, terminalCar2));
+                Train train = new Train(1, "FabricanteX", 100, carList);
+
+                // Calcular y mostrar la capacidad inicial
+                System.out.println("Capacidad inicial del tren: " + train.fetchCapacity());
+
+                // Añadir un carro y recalcular la capacidad
+                PassengerCar newCar = new PassengerCar(4, 70, "ModeloA", "FabricanteX", "central");
+                train.addCar(newCar, 2);
+                System.out.println("Capacidad después de añadir un carro: " + train.fetchCapacity());
+
+                // Remover un carro y recalcular la capacidad
+                train.removeCar(1);
+                System.out.println("Capacidad después de remover un carro: " + train.fetchCapacity());
+
+            } catch (Exception e) {
+                System.out.println("Error durante las pruebas de fetchCapacity: " + e.getMessage());
             }
 
         } catch (Exception e) {

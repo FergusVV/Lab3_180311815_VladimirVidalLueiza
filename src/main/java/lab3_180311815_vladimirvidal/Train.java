@@ -100,11 +100,12 @@ public class Train {
             throw new IllegalArgumentException("El fabricante del carro no coincide con el del tren.");
         }
 
-        List<PassengerCar> newCarList = new ArrayList<>(cars);
-        newCarList.add(position, car);
+        List<PassengerCar> tempList = new ArrayList<>(cars);
+        tempList.add(position, car);
 
-        if (isValidCarConfiguration(newCarList)) {
-            cars.add(position, car);
+        if (isValidCarConfiguration(tempList)) {
+            cars.clear();
+            cars.addAll(tempList);
             return true;
         } else {
             return false;
@@ -125,16 +126,30 @@ public class Train {
             throw new IllegalArgumentException("No se puede remover carro. El tren debe tener al menos dos carros.");
         }
 
-        List<PassengerCar> newCarList = new ArrayList<>(cars);
-        PassengerCar removedCar = newCarList.remove(position);
+        List<PassengerCar> tempList = new ArrayList<>(cars);
+        PassengerCar removedCar = tempList.remove(position);
 
-        if (isValidCarConfiguration(newCarList)) {
-            cars.remove(position);
+        if (isValidCarConfiguration(tempList)) {
+            cars.clear();
+            cars.addAll(tempList);
             return removedCar;
         } else {
             return null;
         }
     }
+
+    /**
+     * Calcula y retorna la capacidad máxima de pasajeros del tren.
+     * @return La capacidad total de pasajeros como un entero.
+     */
+    public int fetchCapacity() {
+        int totalCapacity = 0;
+        for (PassengerCar car : cars) {
+            totalCapacity += car.getPassengerCapacity();
+        }
+        return totalCapacity;
+    }
+
 
     public static boolean isTrain(Train train) {
         return train != null && isValidCarConfiguration(train.getCars());
