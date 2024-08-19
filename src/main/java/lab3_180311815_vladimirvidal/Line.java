@@ -13,7 +13,7 @@ public class Line {
     private final List<Section> sections;
 
     public Line(int id, String name, String railType) {
-        if (id <= 0) {
+        if (id < 0) {
             throw new IllegalArgumentException("El ID de la línea debe ser un número positivo.");
         }
         if (name == null || name.trim().isEmpty()) {

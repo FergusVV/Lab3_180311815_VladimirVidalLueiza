@@ -23,7 +23,7 @@ public class Station {
      * @throws IllegalArgumentException if the station type is invalid or if other parameters are invalid.
      */
     public Station(int id, String name, char type, int stopTime) {
-        if (id <= 0) {
+        if (id < 0) {
             throw new IllegalArgumentException("Station ID must be a positive integer.");
         }
         if (name == null || name.trim().isEmpty()) {
