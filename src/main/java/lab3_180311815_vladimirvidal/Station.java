@@ -1,7 +1,7 @@
 package lab3_180311815_vladimirvidal;
 
 /**
- * Repreentacion de una estacion en una red de metro.
+ * Representation de una estaciona en una red de metro.
  */
 public class Station {
     private final int id;

@@ -1,8 +1,6 @@
 package lab3_180311815_vladimirvidal;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Arrays;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -447,6 +445,342 @@ public class Main {
                 System.out.println("Error inesperado durante las pruebas de Subway - addTrain: " + e.getMessage());
                 e.printStackTrace();
             }
+
+            //---------------------------------
+
+            System.out.println("\nPruebas de Subway - addLine y addDriver:");
+            try {
+                Subway subway = new Subway(1, "Metro de Prueba");
+
+                // Crear líneas válidas
+                Station station1 = new Station(1, "Estación 1", 'r', 30);
+                Station station2 = new Station(2, "Estación 2", 'r', 30);
+                Station station3 = new Station(3, "Estación 3", 't', 45);
+                Section section1 = new Section(station1, station2, 5.0, 100.0);
+                Section section2 = new Section(station2, station3, 4.0, 80.0);
+                List<Section> sections1 = new ArrayList<>(Arrays.asList(section1, section2));
+                Line line1 = new Line(1, "Línea 1", "Eléctrico", sections1);
+
+                Station station4 = new Station(4, "Estación 4", 'r', 30);
+                Station station5 = new Station(5, "Estación 5", 't', 45);
+                Section section3 = new Section(station3, station4, 3.0, 70.0);
+                Section section4 = new Section(station4, station5, 6.0, 120.0);
+                List<Section> sections2 = new ArrayList<>(Arrays.asList(section3, section4));
+                Line line2 = new Line(2, "Línea 2", "Eléctrico", sections2);
+
+                // Añadir líneas válidas
+                List<Line> validLines = new ArrayList<>(Arrays.asList(line1, line2));
+                subway.addLine(validLines);
+                System.out.println("Líneas añadidas. Número de líneas en la red: " + subway.getLines().size());
+
+                // Intentar añadir una línea con ID duplicado
+                Line duplicateLine = new Line(1, "Línea Duplicada", "Eléctrico", sections1);
+                try {
+                    subway.addLine(Arrays.asList(duplicateLine));
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error esperado al añadir línea con ID duplicado: " + e.getMessage());
+                }
+
+                // Crear conductores válidos
+                Driver driver1 = new Driver(1, "Juan Pérez", "FabricanteX");
+                Driver driver2 = new Driver(2, "María García", "FabricanteY");
+
+                // Añadir conductores válidos
+                List<Driver> validDrivers = new ArrayList<>(Arrays.asList(driver1, driver2));
+                subway.addDriver(validDrivers);
+                System.out.println("Conductores añadidos. Número de conductores en la red: " + subway.getDrivers().size());
+
+                // Intentar añadir un conductor con ID duplicado
+                Driver duplicateDriver = new Driver(1, "Pedro López", "FabricanteZ");
+                try {
+                    subway.addDriver(Arrays.asList(duplicateDriver));
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error esperado al añadir conductor con ID duplicado: " + e.getMessage());
+                }
+
+                System.out.println("Número final de líneas en la red: " + subway.getLines().size());
+                System.out.println("Número final de conductores en la red: " + subway.getDrivers().size());
+
+            } catch (Exception e) {
+                System.out.println("Error inesperado durante las pruebas de Subway - addLine y addDriver: " + e.getMessage());
+                e.printStackTrace();
+            }
+
+            System.out.println("\nPruebas extendidas de Subway - toString:");
+            try {
+                Subway subway = new Subway(1, "Metro de Ciudad Grande");
+
+                // Crear estaciones para múltiples líneas
+                Station station1 = new Station(1, "Central", 't', 60);
+                Station station2 = new Station(2, "Plaza Mayor", 'r', 30);
+                Station station3 = new Station(3, "Universidad", 'c', 45);
+                Station station4 = new Station(4, "Parque", 'r', 30);
+                Station station5 = new Station(5, "Estadio", 'c', 45);
+                Station station6 = new Station(6, "Aeropuerto", 't', 60);
+                Station station7 = new Station(7, "Mantenimiento Norte", 'm', 0);
+
+                // Crear secciones para la Línea 1 (no circular)
+                Section section1 = new Section(station1, station2, 3.0, 100.0);
+                Section section2 = new Section(station2, station3, 2.5, 80.0);
+                Section section3 = new Section(station3, station4, 4.0, 120.0);
+
+                // Crear secciones para la Línea 2 (circular)
+                Section section4 = new Section(station3, station5, 5.0, 150.0);
+                Section section5 = new Section(station5, station6, 6.0, 180.0);
+                Section section6 = new Section(station6, station3, 7.0, 200.0);
+
+                // Crear líneas
+                List<Section> sectionsLine1 = new ArrayList<>(Arrays.asList(section1, section2, section3));
+                Line line1 = new Line(1, "Línea Principal", "Eléctrico", sectionsLine1);
+
+                List<Section> sectionsLine2 = new ArrayList<>(Arrays.asList(section4, section5, section6));
+                Line line2 = new Line(2, "Línea Circular", "Magnético", sectionsLine2);
+
+                // Añadir líneas al subway
+                subway.addLine(Arrays.asList(line1, line2));
+
+                // Crear y añadir trenes
+                PassengerCar car1 = new PassengerCar(1, 50, "ModeloA", "FabricanteX", "terminal");
+                PassengerCar car2 = new PassengerCar(2, 60, "ModeloA", "FabricanteX", "central");
+                PassengerCar car3 = new PassengerCar(3, 50, "ModeloA", "FabricanteX", "terminal");
+                List<PassengerCar> cars1 = new ArrayList<>(Arrays.asList(car1, car2, car3));
+                Train train1 = new Train(1, "FabricanteX", 100, cars1);
+
+                PassengerCar car4 = new PassengerCar(4, 55, "ModeloB", "FabricanteY", "terminal");
+                PassengerCar car5 = new PassengerCar(5, 65, "ModeloB", "FabricanteY", "central");
+                PassengerCar car6 = new PassengerCar(6, 65, "ModeloB", "FabricanteY", "central");
+                PassengerCar car7 = new PassengerCar(7, 55, "ModeloB", "FabricanteY", "terminal");
+                List<PassengerCar> cars2 = new ArrayList<>(Arrays.asList(car4, car5, car6, car7));
+                Train train2 = new Train(2, "FabricanteY", 120, cars2);
+
+                subway.addTrain(Arrays.asList(train1, train2));
+
+                // Crear y añadir conductores
+                Driver driver1 = new Driver(1, "Juan Pérez", "FabricanteX");
+                Driver driver2 = new Driver(2, "María García", "FabricanteY");
+                Driver driver3 = new Driver(3, "Carlos López", "FabricanteX");
+                subway.addDriver(Arrays.asList(driver1, driver2, driver3));
+
+                // Imprimir la representación en string del subway
+                System.out.println(subway.toString());
+
+                // Pruebas adicionales
+                System.out.println("\nVerificaciones adicionales:");
+                String subwayString = subway.toString();
+                System.out.println("¿Incluye estación de mantenimiento? " + subwayString.contains("Mantenimiento Norte"));
+                System.out.println("¿Muestra la Línea Circular? " + subwayString.contains("Línea Circular"));
+                System.out.println("¿Incluye todos los conductores? " +
+                        (subwayString.contains("Juan Pérez") && subwayString.contains("María García") && subwayString.contains("Carlos López")));
+                System.out.println("¿Muestra las capacidades de los trenes? " +
+                        (subwayString.contains("Capacidad total: 160") && subwayString.contains("Capacidad total: 240")));
+
+            } catch (Exception e) {
+                System.out.println("Error inesperado durante las pruebas extendidas de Subway - toString: " + e.getMessage());
+                e.printStackTrace();
+            }
+
+            //-----------------------------------------------
+
+            System.out.println("\nPruebas de Subway - assignTrainToLine:");
+            try {
+                Subway subway = new Subway(1, "Metro de Prueba");
+
+                // Crear una línea
+                Station station1 = new Station(1, "Estación 1", 'r', 30);
+                Station station2 = new Station(2, "Estación 2", 'r', 30);
+                Section section = new Section(station1, station2, 5.0, 100.0);
+                List<Section> sections = new ArrayList<>(Arrays.asList(section));
+                Line line = new Line(1, "Línea 1", "Eléctrico", sections);
+
+                // Crear un tren
+                PassengerCar car1 = new PassengerCar(1, 50, "ModeloA", "FabricanteX", "terminal");
+                PassengerCar car2 = new PassengerCar(2, 60, "ModeloA", "FabricanteX", "terminal");
+                List<PassengerCar> cars = new ArrayList<>(Arrays.asList(car1, car2));
+                Train train = new Train(1, "FabricanteX", 100, cars);
+
+                // Añadir línea y tren al subway
+                subway.addLine(Arrays.asList(line));
+                subway.addTrain(Arrays.asList(train));
+
+                // Asignar tren a línea
+                subway.assignTrainToLine(train, line);
+                System.out.println("Tren asignado a línea");
+
+                // Verificar asignación
+                Integer assignedLineId = subway.getLineForTrain(train.getId());
+                System.out.println("Línea asignada al tren: " + (assignedLineId != null ? assignedLineId : "No asignado"));
+
+                // Imprimir representación del subway para ver las asignaciones
+                System.out.println(subway.toString());
+
+            } catch (Exception e) {
+                System.out.println("Error durante las pruebas de assignTrainToLine: " + e.getMessage());
+                e.printStackTrace();
+            }
+
+            //------------------------------------------
+
+            System.out.println("\nPruebas extendidas de Subway - assignDriverToTrain:");
+            try {
+                Subway subway = new Subway(1, "Metro de Prueba");
+
+                // Crear trenes (asegurándose de que cada uno tenga al menos dos carros)
+                Train train1 = new Train(1, "FabricanteX", 100, Arrays.asList(
+                        new PassengerCar(1, 50, "ModeloA", "FabricanteX", "terminal"),
+                        new PassengerCar(2, 60, "ModeloA", "FabricanteX", "terminal")
+                ));
+                Train train2 = new Train(2, "FabricanteY", 120, Arrays.asList(
+                        new PassengerCar(3, 55, "ModeloB", "FabricanteY", "terminal"),
+                        new PassengerCar(4, 65, "ModeloB", "FabricanteY", "terminal")
+                ));
+
+                // Crear conductores
+                Driver driver1 = new Driver(1, "Juan Pérez", "FabricanteX");
+                Driver driver2 = new Driver(2, "María García", "FabricanteY");
+                Driver driver3 = new Driver(3, "Carlos López", "FabricanteX");
+
+                // Añadir trenes y conductores al subway
+                subway.addTrain(Arrays.asList(train1, train2));
+                subway.addDriver(Arrays.asList(driver1, driver2, driver3));
+
+                // Prueba 1: Asignación exitosa
+                subway.assignDriverToTrain(train1, driver1, "10:30");
+                System.out.println("1. Asignación exitosa: Conductor 1 asignado a Tren 1");
+
+                // Prueba 2: Asignación a otro tren
+                subway.assignDriverToTrain(train2, driver2, "11:00");
+                System.out.println("2. Asignación exitosa: Conductor 2 asignado a Tren 2");
+
+                // Prueba 3: Intento de asignar conductor a tren que no existe
+                Train nonExistentTrain = new Train(3, "FabricanteZ", 90, Arrays.asList(
+                        new PassengerCar(5, 50, "ModeloC", "FabricanteZ", "terminal"),
+                        new PassengerCar(6, 60, "ModeloC", "FabricanteZ", "terminal")
+                ));
+                try {
+                    subway.assignDriverToTrain(nonExistentTrain, driver3, "12:00");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("3. Error esperado: " + e.getMessage());
+                }
+
+                // Prueba 4: Intento de asignar conductor que no existe
+                Driver nonExistentDriver = new Driver(4, "Ana Martínez", "FabricanteX");
+                try {
+                    subway.assignDriverToTrain(train1, nonExistentDriver, "13:00");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("4. Error esperado: " + e.getMessage());
+                }
+
+                // Prueba 5: Intento de asignar conductor con fabricante incompatible
+                try {
+                    subway.assignDriverToTrain(train1, driver2, "14:00");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("5. Error esperado: " + e.getMessage());
+                }
+
+                // Prueba 6: Reasignación de conductor (sobrescritura de asignación anterior)
+                subway.assignDriverToTrain(train1, driver3, "15:00");
+                System.out.println("6. Reasignación exitosa: Conductor 3 asignado a Tren 1");
+
+                // Prueba 7: Asignación con formato de hora diferente
+                subway.assignDriverToTrain(train2, driver2, "9:45 AM");
+                System.out.println("7. Asignación con formato de hora diferente exitosa");
+
+                // Imprimir representación final del subway para ver todas las asignaciones
+                System.out.println("\nEstado final de las asignaciones:");
+                System.out.println(subway.toString());
+
+            } catch (Exception e) {
+                System.out.println("Error inesperado durante las pruebas de assignDriverToTrain: " + e.getMessage());
+                e.printStackTrace();
+            }
+
+            //---------------------------------------------
+                try {
+                    System.out.println("\nIniciando pruebas de whereIsTrain...");
+
+                    Subway subway = new Subway(1, "Metro de Prueba");
+
+                    // Crear estaciones y secciones
+                    Station estacion1 = new Station(1, "Estación Central", 't', 60);
+                    Station estacion2 = new Station(2, "Plaza Mayor", 'r', 30);
+                    Station estacion3 = new Station(3, "Universidad", 'c', 45);
+                    Station estacion4 = new Station(4, "Parque", 'r', 30);
+                    Station estacion5 = new Station(5, "Terminal Norte", 't', 60);
+
+                    Section seccion1 = new Section(estacion1, estacion2, 5.0, 100.0);
+                    Section seccion2 = new Section(estacion2, estacion3, 4.0, 80.0);
+                    Section seccion3 = new Section(estacion3, estacion4, 6.0, 120.0);
+                    Section seccion4 = new Section(estacion4, estacion5, 5.0, 100.0);
+
+                    List<Section> secciones = Arrays.asList(seccion1, seccion2, seccion3, seccion4);
+                    Line linea1 = new Line(1, "Línea 1", "Eléctrico", secciones);
+
+                    subway.addLine(Arrays.asList(linea1));
+
+                    // Crear y añadir tren
+                    PassengerCar carro1 = new PassengerCar(1, 50, "ModeloA", "FabricanteX", "terminal");
+                    PassengerCar carro2 = new PassengerCar(2, 60, "ModeloA", "FabricanteX", "central");
+                    PassengerCar carro3 = new PassengerCar(3, 50, "ModeloA", "FabricanteX", "terminal");
+                    List<PassengerCar> carros = Arrays.asList(carro1, carro2, carro3);
+                    Train tren1 = new Train(1, "FabricanteX", 60, carros); // Velocidad: 60 km/h
+
+                    subway.addTrain(Arrays.asList(tren1));
+                    subway.assignTrainToLine(tren1, linea1);
+
+                    // Crear y añadir conductor
+                    Driver conductor1 = new Driver(1, "Juan Pérez", "FabricanteX");
+                    subway.addDriver(Arrays.asList(conductor1));
+
+                    // Asignar conductor al tren con hora de partida
+                    subway.assignDriverToTrain(tren1, conductor1, "10:00");
+
+                    // Crear fechas para las pruebas
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(Calendar.HOUR_OF_DAY, 10);
+                    calendar.set(Calendar.MINUTE, 0);
+                    calendar.set(Calendar.SECOND, 0);
+                    calendar.set(Calendar.MILLISECOND, 0);
+                    Date departureTime = calendar.getTime();
+
+                    // Pruebas
+                    System.out.println("Prueba 1 (10 minutos antes de partir):");
+                    calendar.add(Calendar.MINUTE, -10);
+                    System.out.println(subway.whereIsTrain(tren1, calendar.getTime()));
+
+                    System.out.println("\nPrueba 2 (1 minuto después de partir):");
+                    calendar.setTime(departureTime);
+                    calendar.add(Calendar.MINUTE, 1);
+                    System.out.println(subway.whereIsTrain(tren1, calendar.getTime()));
+
+                    System.out.println("\nPrueba 3 (6 minutos después de partir):");
+                    calendar.setTime(departureTime);
+                    calendar.add(Calendar.MINUTE, 6);
+                    System.out.println(subway.whereIsTrain(tren1, calendar.getTime()));
+
+                    System.out.println("\nPrueba 4 (11 minutos después de partir):");
+                    calendar.setTime(departureTime);
+                    calendar.add(Calendar.MINUTE, 11);
+                    System.out.println(subway.whereIsTrain(tren1, calendar.getTime()));
+
+                    System.out.println("\nPrueba 5 (40 minutos después de partir):");
+                    calendar.setTime(departureTime);
+                    calendar.add(Calendar.MINUTE, 40);
+                    System.out.println(subway.whereIsTrain(tren1, calendar.getTime()));
+
+                    System.out.println("\nPrueba 6 (60 minutos después de partir):");
+                    calendar.setTime(departureTime);
+                    calendar.add(Calendar.MINUTE, 60);
+                    System.out.println(subway.whereIsTrain(tren1, calendar.getTime()));
+
+                    System.out.println("\nPruebas de whereIsTrain completadas.");
+
+                } catch (Exception e) {
+                    System.out.println("Error inesperado durante las pruebas de whereIsTrain: " + e.getMessage());
+                    e.printStackTrace();
+                }
+
+
+
 
         } catch (Exception e) {
             System.out.println("Error inesperado durante la prueba: " + e.getMessage());

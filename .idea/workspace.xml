@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ea3e3377-43f2-4d92-a2ba-4a61a80ca511" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/lab3_180311815_vladimirvidal/Driver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lab3_180311815_vladimirvidal/Subway.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lab3_180311815_vladimirvidal/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lab3_180311815_vladimirvidal/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lab3_180311815_vladimirvidal/Station.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lab3_180311815_vladimirvidal/Station.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lab3_180311815_vladimirvidal/Subway.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lab3_180311815_vladimirvidal/Subway.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,28 +42,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.Build Lab3_180311815_VladimirVidalLueiza.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Lab3 [:Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Lab3.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Lab3_180311815_VladimirVidalLueiza [:Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Lab3_180311815_VladimirVidalLueiza.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;lab3__180311815__vladimirvidal&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/master/Desktop/lab3_17986494_Sepulveda-main&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/master/Desktop/Paradigmas/Lab3/Lab3/src/main/java/org/example/Main.java&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Build Lab3_180311815_VladimirVidalLueiza.executor": "Run",
+    "Gradle.Lab3 [:Main.main()].executor": "Run",
+    "Gradle.Lab3.executor": "Run",
+    "Gradle.Lab3_180311815_VladimirVidalLueiza [:Main.main()].executor": "Run",
+    "Gradle.Lab3_180311815_VladimirVidalLueiza.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "lab3__180311815__vladimirvidal",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/master/Desktop/lab3_17986494_Sepulveda-main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "C:/Users/master/Desktop/Paradigmas/Lab3/Lab3/src/main/java/org/example/Main.java",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "advanced.settings",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="lab3_180311815_vladimirvidal.Main" />
@@ -122,7 +125,8 @@
       <workItem from="1723514878779" duration="2812000" />
       <workItem from="1723765666605" duration="9176000" />
       <workItem from="1723795435742" duration="10424000" />
-      <workItem from="1723939616535" duration="7269000" />
+      <workItem from="1723939616535" duration="13719000" />
+      <workItem from="1724012963449" duration="11302000" />
     </task>
     <servers />
   </component>
