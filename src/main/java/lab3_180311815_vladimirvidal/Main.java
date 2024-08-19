@@ -501,6 +501,10 @@ public class Main {
                 System.out.println("Número final de líneas en la red: " + subway.getLines().size());
                 System.out.println("Número final de conductores en la red: " + subway.getDrivers().size());
 
+                //------------------------------------------
+
+
+
             } catch (Exception e) {
                 System.out.println("Error inesperado durante las pruebas de Subway - addLine y addDriver: " + e.getMessage());
                 e.printStackTrace();
@@ -778,7 +782,192 @@ public class Main {
                     System.out.println("Error inesperado durante las pruebas de whereIsTrain: " + e.getMessage());
                     e.printStackTrace();
                 }
+             //-------------------------------
 
+            System.out.println("\nPruebas de Subway - trainPath:");
+            try {
+                Subway subway = new Subway(1, "Metro de Prueba");
+
+                // Crear estaciones y secciones
+                Station estacion1 = new Station(1, "Estación Central", 't', 60);
+                Station estacion2 = new Station(2, "Plaza Mayor", 'r', 30);
+                Station estacion3 = new Station(3, "Universidad", 'c', 45);
+                Station estacion4 = new Station(4, "Parque", 'r', 30);
+                Station estacion5 = new Station(5, "Terminal Norte", 't', 60);
+
+                Section seccion1 = new Section(estacion1, estacion2, 5.0, 100.0);
+                Section seccion2 = new Section(estacion2, estacion3, 4.0, 80.0);
+                Section seccion3 = new Section(estacion3, estacion4, 6.0, 120.0);
+                Section seccion4 = new Section(estacion4, estacion5, 5.0, 100.0);
+
+                List<Section> secciones = Arrays.asList(seccion1, seccion2, seccion3, seccion4);
+                Line linea1 = new Line(1, "Línea 1", "Eléctrico", secciones);
+
+                subway.addLine(Arrays.asList(linea1));
+
+                // Crear y añadir tren
+                PassengerCar carro1 = new PassengerCar(1, 50, "ModeloA", "FabricanteX", "terminal");
+                PassengerCar carro2 = new PassengerCar(2, 60, "ModeloA", "FabricanteX", "central");
+                PassengerCar carro3 = new PassengerCar(3, 50, "ModeloA", "FabricanteX", "terminal");
+                List<PassengerCar> carros = Arrays.asList(carro1, carro2, carro3);
+                Train tren1 = new Train(1, "FabricanteX", 60, carros); // Velocidad: 60 km/h
+
+                subway.addTrain(Arrays.asList(tren1));
+                subway.assignTrainToLine(tren1, linea1);
+
+                // Crear y añadir conductor
+                Driver conductor1 = new Driver(1, "Juan Pérez", "FabricanteX");
+                subway.addDriver(Arrays.asList(conductor1));
+
+                // Asignar conductor al tren con hora de partida
+                subway.assignDriverToTrain(tren1, conductor1, "10:00");
+
+                // Crear fechas para las pruebas
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.HOUR_OF_DAY, 10);
+                calendar.set(Calendar.MINUTE, 0);
+                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.MILLISECOND, 0);
+                Date departureTime = calendar.getTime();
+
+                // Pruebas
+                System.out.println("Prueba 1 (1 minuto después de partir):");
+                calendar.add(Calendar.MINUTE, 1);
+                printRemainingStations(subway.trainPath(tren1, calendar.getTime()));
+
+                System.out.println("\nPrueba 2 (6 minutos después de partir):");
+                calendar.setTime(departureTime);
+                calendar.add(Calendar.MINUTE, 6);
+                printRemainingStations(subway.trainPath(tren1, calendar.getTime()));
+
+                System.out.println("\nPrueba 3 (11 minutos después de partir):");
+                calendar.setTime(departureTime);
+                calendar.add(Calendar.MINUTE, 11);
+                printRemainingStations(subway.trainPath(tren1, calendar.getTime()));
+
+                System.out.println("\nPrueba 4 (40 minutos después de partir):");
+                calendar.setTime(departureTime);
+                calendar.add(Calendar.MINUTE, 40);
+                printRemainingStations(subway.trainPath(tren1, calendar.getTime()));
+
+                System.out.println("\nPruebas de trainPath completadas.");
+
+
+
+            } catch (Exception e) {
+                System.out.println("Error inesperado durante las pruebas de trainPath: " + e.getMessage());
+                e.printStackTrace();
+            }
+
+
+            System.out.println("\nPruebas extendidas de Subway - trainPath:");
+            try {
+                Subway subway = new Subway(1, "Metro de Prueba");
+
+                // Crear estaciones y secciones
+                Station estacion1 = new Station(1, "Estación Central", 't', 60);
+                Station estacion2 = new Station(2, "Plaza Mayor", 'r', 30);
+                Station estacion3 = new Station(3, "Universidad", 'c', 45);
+                Station estacion4 = new Station(4, "Parque", 'r', 30);
+                Station estacion5 = new Station(5, "Terminal Norte", 't', 60);
+
+                Section seccion1 = new Section(estacion1, estacion2, 5.0, 100.0);
+                Section seccion2 = new Section(estacion2, estacion3, 4.0, 80.0);
+                Section seccion3 = new Section(estacion3, estacion4, 6.0, 120.0);
+                Section seccion4 = new Section(estacion4, estacion5, 5.0, 100.0);
+
+                List<Section> secciones = Arrays.asList(seccion1, seccion2, seccion3, seccion4);
+                Line linea1 = new Line(1, "Línea 1", "Eléctrico", secciones);
+
+                subway.addLine(Arrays.asList(linea1));
+
+                // Crear y añadir tren
+                PassengerCar carro1 = new PassengerCar(1, 50, "ModeloA", "FabricanteX", "terminal");
+                PassengerCar carro2 = new PassengerCar(2, 60, "ModeloA", "FabricanteX", "central");
+                PassengerCar carro3 = new PassengerCar(3, 50, "ModeloA", "FabricanteX", "terminal");
+                List<PassengerCar> carros = Arrays.asList(carro1, carro2, carro3);
+                Train tren1 = new Train(1, "FabricanteX", 60, carros); // Velocidad: 60 km/h
+
+                subway.addTrain(Arrays.asList(tren1));
+                subway.assignTrainToLine(tren1, linea1);
+
+                // Crear y añadir conductor
+                Driver conductor1 = new Driver(1, "Juan Pérez", "FabricanteX");
+                subway.addDriver(Arrays.asList(conductor1));
+
+                // Asignar conductor al tren con hora de partida
+                subway.assignDriverToTrain(tren1, conductor1, "10:00");
+
+                // Crear fechas para las pruebas
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.HOUR_OF_DAY, 10);
+                calendar.set(Calendar.MINUTE, 0);
+                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.MILLISECOND, 0);
+                Date departureTime = calendar.getTime();
+
+                // Pruebas
+                System.out.println("Prueba 1 (Justo antes de partir):");
+                calendar.add(Calendar.SECOND, -1);
+                printRemainingStations(subway.trainPath(tren1, calendar.getTime()));
+
+                System.out.println("\nPrueba 2 (1 minuto después de partir):");
+                calendar.setTime(departureTime);
+                calendar.add(Calendar.MINUTE, 1);
+                printRemainingStations(subway.trainPath(tren1, calendar.getTime()));
+
+                System.out.println("\nPrueba 3 (6 minutos después de partir):");
+                calendar.setTime(departureTime);
+                calendar.add(Calendar.MINUTE, 6);
+                printRemainingStations(subway.trainPath(tren1, calendar.getTime()));
+
+                System.out.println("\nPrueba 4 (11 minutos después de partir):");
+                calendar.setTime(departureTime);
+                calendar.add(Calendar.MINUTE, 11);
+                printRemainingStations(subway.trainPath(tren1, calendar.getTime()));
+
+                System.out.println("\nPrueba 5 (20 minutos después de partir):");
+                calendar.setTime(departureTime);
+                calendar.add(Calendar.MINUTE, 20);
+                printRemainingStations(subway.trainPath(tren1, calendar.getTime()));
+
+                System.out.println("\nPrueba 6 (30 minutos después de partir):");
+                calendar.setTime(departureTime);
+                calendar.add(Calendar.MINUTE, 30);
+                printRemainingStations(subway.trainPath(tren1, calendar.getTime()));
+
+                System.out.println("\nPrueba 7 (40 minutos después de partir):");
+                calendar.setTime(departureTime);
+                calendar.add(Calendar.MINUTE, 40);
+                printRemainingStations(subway.trainPath(tren1, calendar.getTime()));
+
+                System.out.println("\nPrueba 8 (60 minutos después de partir):");
+                calendar.setTime(departureTime);
+                calendar.add(Calendar.MINUTE, 60);
+                printRemainingStations(subway.trainPath(tren1, calendar.getTime()));
+
+                System.out.println("\nPrueba 9 (Tren no asignado a línea):");
+                Train tren2 = new Train(2, "FabricanteY", 70, carros);
+                subway.addTrain(Arrays.asList(tren2));
+                try {
+                    subway.trainPath(tren2, calendar.getTime());
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error esperado: " + e.getMessage());
+                }
+
+                System.out.println("\nPrueba 10 (Tren no existente):");
+                try {
+                    subway.trainPath(999, calendar.getTime());
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error esperado: " + e.getMessage());
+                }
+
+                System.out.println("\nPruebas de trainPath completadas.");
+
+            } catch (Exception e) {
+                System.out.println("Error inesperado durante las pruebas de trainPath: " + e.getMessage());
+                e.printStackTrace();
+            }
 
 
 
@@ -788,6 +977,13 @@ public class Main {
         }
 
 
+    }
+
+    private static void printRemainingStations(List<Station> stations) {
+        System.out.println("Estaciones restantes:");
+        for (Station station : stations) {
+            System.out.println("  - " + station.getName());
+        }
     }
 
     private static void imprimirSecciones(Line linea) {

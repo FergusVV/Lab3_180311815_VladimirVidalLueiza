@@ -251,6 +251,74 @@ public class Subway {
 
 
 
+
+    public List<Station> trainPath(Object trainIdentifier, Date time) {
+        Train train = getTrainById(trainIdentifier);
+        if (train == null) {
+            throw new IllegalArgumentException("Tren no encontrado.");
+        }
+
+        Integer lineId = trainToLineAssignments.get(train.getId());
+        if (lineId == null) {
+            throw new IllegalArgumentException("El tren no está asignado a ninguna línea.");
+        }
+
+        Line line = getLineById(lineId);
+        if (line == null) {
+            throw new IllegalArgumentException("Línea no encontrada.");
+        }
+
+        DriverAssignment driverAssignment = driverAssignments.get(train.getId());
+        if (driverAssignment == null) {
+            throw new IllegalArgumentException("El tren no tiene un conductor asignado.");
+        }
+
+        long departureTimeMillis = parseTime(driverAssignment.departureTime);
+        long currentTimeMillis = time.getTime() % (24 * 60 * 60 * 1000);
+
+        if (currentTimeMillis < departureTimeMillis) {
+            currentTimeMillis += 24 * 60 * 60 * 1000;
+        }
+
+        long elapsedMinutes = (currentTimeMillis - departureTimeMillis) / (60 * 1000);
+        long totalTripTime = calculateTotalTripTime(line, train);
+
+        if (totalTripTime == 0) {
+            throw new IllegalStateException("Error: No se pudo calcular el tiempo total del recorrido.");
+        }
+
+        long remainingMinutes = elapsedMinutes % totalTripTime;
+        List<Station> remainingStations = new ArrayList<>();
+        long accumulatedMinutes = 0;
+        boolean startCollecting = false;
+
+        for (Section section : line.getSections()) {
+            long travelTime = calculateTravelTime(section, train);
+
+            if (accumulatedMinutes + travelTime > remainingMinutes) {
+                startCollecting = true;
+            }
+
+            if (startCollecting) {
+                remainingStations.add(section.getPoint2());
+            }
+
+            accumulatedMinutes += travelTime;
+            accumulatedMinutes += section.getPoint2().getStopTime() / 60;
+        }
+
+        if (remainingStations.isEmpty()) {
+            // Si la lista está vacía, significa que el tren ha completado el recorrido
+            // Devolvemos todas las estaciones de la línea
+            for (Section section : line.getSections()) {
+                remainingStations.add(section.getPoint2());
+            }
+        }
+
+        return remainingStations;
+    }
+
+
     private Train getTrainById(Object trainIdentifier) {
         if (trainIdentifier instanceof Train) {
             return (Train) trainIdentifier;

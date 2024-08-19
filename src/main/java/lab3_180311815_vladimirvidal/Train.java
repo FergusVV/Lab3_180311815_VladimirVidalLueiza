@@ -19,16 +19,16 @@ public class Train {
      */
     public Train(int id, String trainMaker, int speed, List<PassengerCar> carList) {
         if (id <= 0) {
-            throw new IllegalArgumentException("Train ID must be positive.");
+            throw new IllegalArgumentException("Train ID debe ser positivo");
         }
         if (trainMaker == null || trainMaker.trim().isEmpty()) {
-            throw new IllegalArgumentException("Train maker cannot be null or empty.");
+            throw new IllegalArgumentException("Train maker no puede ser nulo o vacio.");
         }
         if (speed <= 0) {
-            throw new IllegalArgumentException("Speed must be positive.");
+            throw new IllegalArgumentException("Speed debe ser positivo");
         }
         if (carList == null || carList.size() < 2) {
-            throw new IllegalArgumentException("Car list must contain at least two cars.");
+            throw new IllegalArgumentException("Car list dene contener 2 o mas.");
         }
 
         this.id = id;
