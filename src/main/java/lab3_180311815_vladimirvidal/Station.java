@@ -42,22 +42,47 @@ public class Station {
         this.stopTime = stopTime;
     }
 
-    // Getters
+    /**
+     * Obtiene el identificador único de la estación.
+     *
+     * @return El identificador único de la estación.
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Obtiene el nombre de la estación.
+     *
+     * @return El nombre de la estación.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Obtiene el tipo de la estación.
+     *
+     * @return El tipo de la estación como un carácter.
+     */
     public char getType() {
         return type;
     }
 
+    /**
+     * Obtiene el tiempo de parada en la estación.
+     *
+     * @return El tiempo de parada en minutos.
+     */
     public int getStopTime() {
         return stopTime;
     }
+
+    /**
+     * Devuelve una representación en cadena de la estación.
+     *
+     * @return Una cadena que representa la estación, incluyendo su ID, nombre, tipo y tiempo de parada.
+     */
 
     @Override
     public String toString() {

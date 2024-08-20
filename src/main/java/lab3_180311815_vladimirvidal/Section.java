@@ -38,22 +38,47 @@ public class Section {
         this.cost = cost;
     }
 
-    // Getters
+    /**
+     * Obtiene la estación de inicio de la sección.
+     *
+     * @return La estación de inicio.
+     */
     public Station getPoint1() {
         return point1;
     }
 
+    /**
+     * Obtiene la estación final de la sección.
+     *
+     * @return La estación final.
+     */
     public Station getPoint2() {
         return point2;
     }
 
+    /**
+     * Obtiene la distancia entre las dos estaciones.
+     *
+     * @return La distancia entre las estaciones.
+     */
     public double getDistance() {
         return distance;
     }
 
+    /**
+     * Obtiene el costo asociado a la sección.
+     *
+     * @return El costo de la sección.
+     */
     public double getCost() {
         return cost;
     }
+
+    /**
+     * Devuelve una representación en cadena de la sección.
+     *
+     * @return Una cadena que representa la sección, incluyendo las estaciones, la distancia y el costo.
+     */
 
     @Override
     public String toString() {

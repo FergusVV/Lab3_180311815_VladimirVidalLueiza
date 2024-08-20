@@ -12,6 +12,15 @@ public class Line {
     private final String railType;
     private final List<Section> sections;
 
+    /**
+     * Constructor para crear una nueva línea de metro.
+     *
+     * @param id       El identificador único de la línea.
+     * @param name     El nombre de la línea.
+     * @param railType El tipo de riel utilizado en la línea.
+     * @throws IllegalArgumentException Si el id es negativo o si el nombre o tipo de riel es nulo o vacío.
+     */
+
     public Line(int id, String name, String railType) {
         if (id < 0) {
             throw new IllegalArgumentException("El ID de la línea debe ser un número positivo.");
@@ -28,6 +37,14 @@ public class Line {
         this.railType = railType;
         this.sections = new ArrayList<>();
     }
+
+
+    /**
+     * Añade una sección a la línea.
+     *
+     * @param section La sección a añadir.
+     * @throws IllegalArgumentException Si la sección es nula.
+     */
 
     public void addSection(Section section) {
         if (section == null) {

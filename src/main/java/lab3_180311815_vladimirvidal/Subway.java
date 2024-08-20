@@ -2,6 +2,10 @@ package lab3_180311815_vladimirvidal;
 
 import java.util.*;
 
+/**
+ * Representa una red de metro que contiene líneas, trenes y conductores.
+ */
+
 public class Subway {
     private final int id;
     private final String name;
@@ -10,6 +14,14 @@ public class Subway {
     private final List<Driver> drivers;
     private final Map<Integer, Integer> trainToLineAssignments;
     private final Map<Integer, DriverAssignment> driverAssignments;
+
+    /**
+     * Constructor para crear una nueva red de metro.
+     *
+     * @param id   El identificador único de la red de metro.
+     * @param name El nombre de la red de metro.
+     * @throws IllegalArgumentException Si el id es menor o igual a 0 o si el nombre es nulo o vacío.
+     */
 
     public Subway(int id, String name) {
         if (id <= 0) {
@@ -28,6 +40,13 @@ public class Subway {
         this.driverAssignments = new HashMap<>();
     }
 
+    /**
+     * Añade uno o más trenes a la red de metro.
+     *
+     * @param trainList La lista de trenes a añadir.
+     * @throws IllegalArgumentException Si la lista de trenes es nula.
+     */
+
     public void addTrain(List<Train> trainList) {
         if (trainList == null || trainList.isEmpty()) {
             throw new IllegalArgumentException("La lista de trenes no puede ser nula o vacía.");
@@ -44,6 +63,13 @@ public class Subway {
 
         trains.addAll(trainList);
     }
+
+    /**
+     * Añade una o más líneas a la red de metro.
+     *
+     * @param lineList line La lista de líneas a añadir.
+     * @throws IllegalArgumentException Si la lista de líneas es nula.
+     */
 
     public void addLine(List<Line> lineList) {
         if (lineList == null || lineList.isEmpty()) {
@@ -66,6 +92,13 @@ public class Subway {
         return lines.stream().anyMatch(line -> line.getId() == id);
     }
 
+    /**
+     * Añade uno o más conductores a la red de metro.
+     *
+     * @param driverList La lista de conductores a añadir.
+     * @throws IllegalArgumentException Si la lista de conductores es nula.
+     */
+    
     public void addDriver(List<Driver> driverList) {
         if (driverList == null || driverList.isEmpty()) {
             throw new IllegalArgumentException("La lista de conductores no puede ser nula o vacía.");
@@ -79,7 +112,13 @@ public class Subway {
 
         drivers.addAll(driverList);
     }
-
+    /**
+     * Asigna un tren a una línea específica en la red de metro.
+     *
+     * @param line El ID del tren.
+     * @param train  El ID de la línea.
+     * @throws IllegalArgumentException Si el tren o la línea no existen en la red.
+     */
     public void assignTrainToLine(Train train, Line line) {
         if (!trains.contains(train) || !lines.contains(line)) {
             throw new IllegalArgumentException("El tren o la línea no existen en esta red de metro.");
@@ -92,6 +131,15 @@ public class Subway {
         return trainToLineAssignments.get(trainId);
     }
 
+    /**
+     * Asigna un conductor a un tren específico en la red de metro.
+     *
+     * @param driver        El ID del conductor.
+     * @param train         El ID del tren.
+     * @param departureTime   La hora de salida.
+     * @throws IllegalArgumentException Si el conductor o el tren no existen en la red.
+     */
+    
     public void assignDriverToTrain(Train train, Driver driver, String departureTime) {
         if (!trains.contains(train)) {
             throw new IllegalArgumentException("El tren no existe en esta red de metro.");
