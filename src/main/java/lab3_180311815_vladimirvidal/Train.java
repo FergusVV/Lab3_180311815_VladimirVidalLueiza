@@ -7,6 +7,7 @@ public class Train {
     private final int id;
     private final String trainMaker;
     private final int speed;
+    private final int stationStaytime;
     private final List<PassengerCar> cars;
 
     /**
@@ -14,10 +15,11 @@ public class Train {
      * @param id Unique identifier for the train.
      * @param trainMaker Manufacturer of the train.
      * @param speed Speed of the train (must be positive).
+     * @param stationStaytime Time the train stays at each station (must be non-negative).
      * @param carList List of PassengerCar objects.
      * @throws IllegalArgumentException if any parameter is invalid or if the car list doesn't meet the requirements.
      */
-    public Train(int id, String trainMaker, int speed, List<PassengerCar> carList) {
+    public Train(int id, String trainMaker, int speed, int stationStaytime, List<PassengerCar> carList) {
         if (id <= 0) {
             throw new IllegalArgumentException("Train ID debe ser positivo");
         }
@@ -27,17 +29,25 @@ public class Train {
         if (speed <= 0) {
             throw new IllegalArgumentException("Speed debe ser positivo");
         }
-        if (carList == null || carList.size() < 2) {
-            throw new IllegalArgumentException("Car list dene contener 2 o mas.");
+        if (stationStaytime < 0) {
+            throw new IllegalArgumentException("Station staytime no puede ser negativo");
+        }
+        if (carList == null || carList.isEmpty()) {
+            throw new IllegalArgumentException("Car list no puede ser nula o vacía.");
+        }
+        if (!isValidCarConfiguration(carList)) {
+            throw new IllegalArgumentException("Configuración de carros inválida.");
         }
 
         this.id = id;
         this.trainMaker = trainMaker;
         this.speed = speed;
+        this.stationStaytime = stationStaytime;
         this.cars = new ArrayList<>(carList);
     }
+
     public static boolean isValidCarConfiguration(List<PassengerCar> carList) {
-        if (carList == null || carList.size() < 2) {
+        if (carList.size() < 2) {
             return false;
         }
         if (!carList.get(0).getCarType().equals("terminal") || !carList.get(carList.size() - 1).getCarType().equals("terminal")) {
@@ -51,8 +61,7 @@ public class Train {
                 return false;
             }
         }
-        return carList.get(0).getModel().equals(model) && carList.get(0).getTrainMaker().equals(trainMaker) &&
-                carList.get(carList.size() - 1).getModel().equals(model) && carList.get(carList.size() - 1).getTrainMaker().equals(trainMaker);
+        return true;
     }
 
     // Getters
@@ -68,6 +77,10 @@ public class Train {
         return speed;
     }
 
+    public int getStationStaytime() {
+        return stationStaytime;
+    }
+
     public List<PassengerCar> getCars() {
         return new ArrayList<>(cars); // Return a copy to preserve encapsulation
     }
@@ -78,6 +91,7 @@ public class Train {
                 "id=" + id +
                 ", trainMaker='" + trainMaker + '\'' +
                 ", speed=" + speed +
+                ", stationStaytime=" + stationStaytime +
                 ", numberOfCars=" + cars.size() +
                 '}';
     }

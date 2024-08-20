@@ -18,7 +18,7 @@ public class PassengerCar {
      * @throws IllegalArgumentException si alguno de los parámetros es inválido.
      */
     public PassengerCar(int id, int passengerCapacity, String model, String trainMaker, String carType) {
-        if (id <= 0) {
+        if (id < 0) {
             throw new IllegalArgumentException("El ID del carro debe ser un número positivo.");
         }
         if (passengerCapacity <= 0) {

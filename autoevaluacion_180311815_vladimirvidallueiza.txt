@@ -1,0 +1,54 @@
+Autoevalucion Vladimir Vidal Lueiza 
+18031181-5
+
+0: No realizado.
+0.25: Implementación con problemas mayores (funciona 25% de las veces o no funciona)
+0.5: Implementación con funcionamiento irregular (funciona 50% de las veces)
+0.75: Implementación con problemas menores (funciona 75% de las veces)
+1: Implementación completa sin problemas (funciona 100% de las veces)
+
+Autoevaluación Laboratorio 3
+
+Requisitos No Funcionales:
+1. (obligatorio) Autoevaluación: 1
+2. (obligatorio) Lenguaje y herramientas de trabajo (Java, OpenJDK 11, IntelliJ IDEA): 1
+3. (obligatorio) Uso de Gradle: 1
+4. (obligatorio) Interacciones con el programa por consola/terminal o GUI: 1
+5. (obligatorio) Uso del paradigma orientado a objetos: 1
+6. (1 pto) Documentación JavaDoc: ___
+7. (1 pto) Organización del código: ___
+8. (1.5 ptos) Diagrama de análisis UML: ___
+9. (1.5 ptos) Diagrama de diseño UML: ___
+10. (1 pto) Uso de git (al menos 10 commits en 2 semanas): ___
+
+Requisitos Funcionales:
+1. (1 pto) Clases y estructuras que forman el programa: 1
+2. (1 pto) Menú interactivo por terminal: 1
+3. (0.1 pts) TDA Station - constructor: 1
+4. (0.1 pts) TDA Section - constructor: 1
+5. (0.1 pts) TDA Line - constructor: 1
+6. (0.1 pts) TDA Line - line-length: 1
+7. (0.1 pts) TDA Line - line-section-length: 1
+8. (0.1 pts) TDA Line - line-cost: 1
+9. (0.1 pts) TDA Line - line-section-cost: 1
+10. (0.1 pts) TDA Line - line-add-section: 1
+11. (0.1 pts) TDA Line - isLine: 1
+12. (0.1 pts) TDA PassengerCar - Constructor: 1
+13. (0.1 pts) TDA Train - Constructor: 1
+14. (0.1 pts) TDA Train - addCar: 1
+15. (0.1 pts) TDA Train - removeCar: 1
+16. (0.1 pts) TDA Train - isTrain: 1
+17. (0.1 pts) TDA Train - fetchCapacity: 1
+18. (0.1 pts) TDA Driver - Constructor: 1
+19. (0.1 pts) TDA Subway - Constructor: 1
+20. (0.1 pts) TDA Subway - addTrain: 1
+21. (0.1 pts) TDA Subway - addLine: 1
+22. (0.1 pts) TDA Subway - addDriver: 1
+23. (0.1 pts) TDA Subway - toString: 1
+24. (0.1 pts) TDA Subway - assignTrainToLine: 1
+25. (0.1 pts) TDA Subway - assignDriverToTrain: 1
+26. (1 pto) TDA Subway - whereIsTrain: 1
+27. (2 pts) TDA Subway - trainPath: 1
+
+
+

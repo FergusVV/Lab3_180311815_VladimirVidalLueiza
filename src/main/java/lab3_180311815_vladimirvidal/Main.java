@@ -9,7 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
         subway = new Subway(1, "Metro de Santiago");
-
+        System.setProperty("file.encoding", "UTF-8");
         while (true) {
             printMainMenu();
             int choice = getIntInput();
@@ -47,7 +47,7 @@ public class Main {
         while (true) {
             System.out.println("\n### Sistema Metro - Cargar información del sistema de metro ###");
             System.out.println("1. Creación de una línea de metro básica (cargar archivo lineas.txt)");
-            System.out.println("2. Combinaciones entre estaciones entre Líneas (cargar archivo combinaciones.txt)");
+            System.out.println("2. Combinaciones entre carros (cargar archivo carros.txt)");
             System.out.println("3. Definición de trenes con distintos número de carros (cargar archivo trenes.txt)");
             System.out.println("4. Conductores asignados a una Línea (cargar archivo conductores.txt)");
             System.out.println("5. Retorno al menú de Inicio");
@@ -59,7 +59,8 @@ public class Main {
                     loadLines();
                     break;
                 case 2:
-                    loadCombinations();
+                    List<PassengerCar> loadedCars = loadPassengerCars();
+                    System.out.println("Se cargaron " + loadedCars.size() + " carros de pasajeros.");
                     break;
                 case 3:
                     loadTrains();
@@ -166,62 +167,81 @@ public class Main {
         return null;
     }
 
-    private static void loadCombinations() {
-        System.out.println("Funcionalidad de carga de combinaciones no implementada.");
-        // Implementar la carga de combinaciones
+    private static List<PassengerCar> loadPassengerCars() {
+        List<PassengerCar> cars = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/main/java/lab3_180311815_vladimirvidal/carros.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(";");
+                if (parts.length == 5) {
+                    int id = Integer.parseInt(parts[0]);
+                    int capacity = Integer.parseInt(parts[1]);
+                    String model = parts[2];
+                    String maker = parts[3];
+                    String type = parts[4];
+                    cars.add(new PassengerCar(id, capacity, model, maker, type));
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error al leer el archivo de carros: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            System.out.println("Error en el formato de los datos: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error al crear un carro de pasajeros: " + e.getMessage());
+        }
+        return cars;
     }
 
     private static void loadTrains() {
-        try {
-            List<Train> trains = new ArrayList<>();
-            BufferedReader reader = new BufferedReader(new FileReader("trenes.txt"));
+        List<PassengerCar> allCars = loadPassengerCars();
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/main/java/lab3_180311815_vladimirvidal/trenes.txt"))) {
             String line;
+            List<Train> trains = new ArrayList<>();
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length < 4) {
-                    System.out.println("Formato de tren inválido: " + line);
-                    continue;
-                }
-                int id = Integer.parseInt(parts[0].trim());
-                String trainMaker = parts[1].trim();
-                int speed = Integer.parseInt(parts[2].trim());
+                String[] parts = line.split(";");
+                if (parts.length >= 5) {
+                    int id = Integer.parseInt(parts[0]);
+                    String maker = parts[1];
+                    int speed = Integer.parseInt(parts[2]);
+                    int stationStaytime = Integer.parseInt(parts[3]);
 
-                List<PassengerCar> cars = new ArrayList<>();
-                // Asumiendo que el resto de los elementos son los carros
-                for (int i = 3; i < parts.length; i++) {
-                    String[] carParts = parts[i].split(":");
-                    if (carParts.length < 5) {
-                        System.out.println("Formato de carro inválido: " + parts[i]);
-                        continue;
+                    List<PassengerCar> trainCars = new ArrayList<>();
+                    String[] carIds = parts[4].split(",");
+                    for (String carId : carIds) {
+                        int cId = Integer.parseInt(carId);
+                        PassengerCar car = allCars.stream()
+                                .filter(c -> c.getId() == cId)
+                                .findFirst()
+                                .orElse(null);
+                        if (car != null) {
+                            trainCars.add(car);
+                        }
                     }
-                    int carId = Integer.parseInt(carParts[0].trim());
-                    int capacity = Integer.parseInt(carParts[1].trim());
-                    String model = carParts[2].trim();
-                    String carMaker = carParts[3].trim();
-                    String carType = carParts[4].trim();
 
-                    cars.add(new PassengerCar(carId, capacity, model, carMaker, carType));
+                    try {
+                        Train train = new Train(id, maker, speed, stationStaytime, trainCars);
+                        trains.add(train);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Error al crear el tren: " + e.getMessage());
+                    }
+                } else {
+                    System.out.println("Formato de línea inválido: " + line);
                 }
-
-                trains.add(new Train(id, trainMaker, speed, cars));
             }
-            reader.close();
             subway.addTrain(trains);
-            System.out.println("Trenes cargados con éxito.");
+            System.out.println("Se cargaron " + trains.size() + " trenes.");
         } catch (IOException e) {
             System.out.println("Error al leer el archivo de trenes: " + e.getMessage());
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error al procesar los datos de los trenes: " + e.getMessage());
         }
     }
 
     private static void loadDrivers() {
         try {
             List<Driver> drivers = new ArrayList<>();
-            BufferedReader reader = new BufferedReader(new FileReader("conductores.txt"));
+            BufferedReader reader = new BufferedReader(new FileReader("src/main/java/lab3_180311815_vladimirvidal/conductores.txt"));
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
+                String[] parts = line.split(";");
                 if (parts.length < 3) {
                     System.out.println("Formato de conductor inválido: " + line);
                     continue;
@@ -261,7 +281,12 @@ public class Main {
             System.out.println("9. Obtener la capacidad máxima de pasajeros de un tren");
             System.out.println("10. Determinar la ubicación de un tren a partir de una hora indicada");
             System.out.println("11. Armar el recorrido del tren a partir de una hora especificada");
-            System.out.println("12. Retorno al menú de Inicio");
+            System.out.println("12. Asignar un tren a una línea");
+            System.out.println("13. Asignar un conductor a un tren");
+            System.out.println("14. Listar todas las líneas");
+            System.out.println("15. Listar todos los trenes");
+            System.out.println("16. Listar todos los conductores");
+            System.out.println("17. Retorno al menú de Inicio");
             System.out.print("Seleccione una opción: ");
 
             int choice = getIntInput();
@@ -288,10 +313,10 @@ public class Main {
                     removeCarFromTrainInteraction();
                     break;
                 case 8:
-                    //isTrainInteraction();
+                    isTrainInteraction();
                     break;
                 case 9:
-                    //getTrainCapacityInteraction();
+                    getTrainCapacityInteraction();
                     break;
                 case 10:
                     whereIsTrainInteraction();
@@ -300,6 +325,21 @@ public class Main {
                     trainPathInteraction();
                     break;
                 case 12:
+                    assignTrainToLineInteraction();
+                    break;
+                case 13:
+                    assignDriverToTrainInteraction();
+                    break;
+                case 14:
+                    listAllLines();
+                    break;
+                case 15:
+                    listAllTrains();
+                    break;
+                case 16:
+                    listAllDrivers();
+                    break;
+                case 17:
                     return;
                 default:
                     System.out.println("Opción no válida. Por favor, intente de nuevo.");
@@ -439,6 +479,8 @@ public class Main {
         }
     }
 
+
+
     private static void trainPathInteraction() {
         System.out.print("Ingrese el ID del tren: ");
         int trainId = getIntInput();
@@ -461,6 +503,118 @@ public class Main {
         }
     }
 
+    private static void isTrainInteraction() {
+        System.out.print("Ingrese el ID del tren: ");
+        int trainId = getIntInput();
+        Train train = findTrainById(trainId);
+        if (train != null) {
+            boolean isValid = Train.isTrain(train);
+            System.out.println("¿El tren es válido? " + (isValid ? "Sí" : "No"));
+        } else {
+            System.out.println("Tren no encontrado.");
+        }
+    }
+
+    private static void getTrainCapacityInteraction() {
+        System.out.print("Ingrese el ID del tren: ");
+        int trainId = getIntInput();
+        Train train = findTrainById(trainId);
+        if (train != null) {
+            int capacity = train.fetchCapacity();
+            System.out.println("La capacidad total del tren es: " + capacity + " pasajeros");
+        } else {
+            System.out.println("Tren no encontrado.");
+        }
+    }
+
+    private static void assignTrainToLineInteraction() {
+        System.out.print("Ingrese el ID del tren: ");
+        int trainId = getIntInput();
+        Train train = findTrainById(trainId);
+
+        System.out.print("Ingrese el ID de la línea: ");
+        int lineId = getIntInput();
+        Line line = findLineById(lineId);
+
+        if (train != null && line != null) {
+            try {
+                subway.assignTrainToLine(train, line);
+                System.out.println("Tren asignado a la línea exitosamente.");
+            } catch (IllegalArgumentException e) {
+                System.out.println("Error al asignar el tren: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Tren o línea no encontrados.");
+        }
+    }
+
+    private static void assignDriverToTrainInteraction() {
+        System.out.print("Ingrese el ID del tren: ");
+        int trainId = getIntInput();
+        Train train = findTrainById(trainId);
+
+        System.out.print("Ingrese el ID del conductor: ");
+        int driverId = getIntInput();
+        Driver driver = findDriverById(driverId);
+
+        if (train != null && driver != null) {
+            System.out.print("Ingrese la hora de partida (formato HH:mm): ");
+            String departureTime = scanner.next();
+            try {
+                subway.assignDriverToTrain(train, driver, departureTime);
+                System.out.println("Conductor asignado al tren exitosamente.");
+            } catch (IllegalArgumentException e) {
+                System.out.println("Error al asignar el conductor: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Tren o conductor no encontrados.");
+        }
+    }
+
+    private static void listAllLines() {
+        List<Line> lines = subway.getLines();
+        if (lines.isEmpty()) {
+            System.out.println("No hay líneas registradas.");
+        } else {
+            System.out.println("Líneas registradas:");
+            for (Line line : lines) {
+                System.out.println(line);
+            }
+        }
+    }
+
+    private static void listAllTrains() {
+        List<Train> trains = subway.getTrains();
+        if (trains.isEmpty()) {
+            System.out.println("No hay trenes registrados.");
+        } else {
+            System.out.println("Trenes registrados:");
+            for (Train train : trains) {
+                System.out.println(train);
+            }
+        }
+    }
+
+    private static void listAllDrivers() {
+        List<Driver> drivers = subway.getDrivers();
+        if (drivers.isEmpty()) {
+            System.out.println("No hay conductores registrados.");
+        } else {
+            System.out.println("Conductores registrados:");
+            for (Driver driver : drivers) {
+                System.out.println(driver);
+            }
+        }
+    }
+
+    private static Driver findDriverById(int id) {
+        for (Driver driver : subway.getDrivers()) {
+            if (driver.getId() == id) {
+                return driver;
+            }
+        }
+        return null;
+    }
     private static Date parseTime(String timeString) {
         String[] parts = timeString.split(":");
         if (parts.length != 2) {

@@ -13,7 +13,7 @@ public class Driver {
      * @throws IllegalArgumentException si alguno de los parámetros es inválido.
      */
     public Driver(int id, String name, String trainMaker) {
-        if (id <= 0) {
+        if (id < 0) {
             throw new IllegalArgumentException("El ID del conductor debe ser un número positivo.");
         }
         if (name == null || name.trim().isEmpty()) {
